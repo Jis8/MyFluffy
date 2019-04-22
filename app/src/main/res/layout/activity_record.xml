@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RecordActivity">
+
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/tvToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:fontFamily="@font/nanum_square_b"
+            android:text="기록" />
+
+        <Button
+            android:id="@+id/tbBtnSave"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/ic_done_black_24dp"/>
+
+
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp">
+        <!--<Button
+            android:id="@+id/btnCategory"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="category" />-->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            >
+
+            <RadioGroup
+                android:id="@+id/rgToilet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="invisible">
+
+                <RadioButton
+                    android:id="@+id/rbPee"
+                    android:button="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:background="@drawable/selector"
+                    android:layout_marginHorizontal="5dp"
+                    android:text="소변" />
+
+                <RadioButton
+                    android:id="@+id/rbPoo"
+                    android:button="@null"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:background="@drawable/selector"
+                    android:layout_marginHorizontal="5dp"
+
+                    android:text="대변" />
+            </RadioGroup>
+
+            <AutoCompleteTextView
+                android:id="@+id/edtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/roundsquare_outline"
+                android:paddingHorizontal="16dp"
+                android:completionThreshold="1"
+                android:hint="제목"
+                android:textSize="14sp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linearDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginVertical="5dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0000 / 00 / 00 수요일"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="10 : 10 "
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  >  " />
+
+            <TextView
+                android:id="@+id/tvTimeEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:text="10 : 20"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/edtContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:padding="16dp"
+            android:gravity="top"
+            android:background="@drawable/roundsquare_outline"
+            android:hint="메모"
+            android:lineSpacingExtra="16dp"
+            android:lines="5"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/linearIB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginVertical="5dp">
+
+
+            <com.example.jisoo.myfluffy.SquareImageButton
+                android:id="@+id/ibtnPic1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@drawable/roundsquare_outline"
+                android:src="@drawable/ic_add_black_24dp"
+                android:scaleType="centerCrop" />
+
+            <com.example.jisoo.myfluffy.SquareImageButton
+                android:id="@+id/ibtnPic2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/roundsquare_outline"
+                android:scaleType="centerCrop" />
+
+            <com.example.jisoo.myfluffy.SquareImageButton
+                android:id="@+id/ibtnPic3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@drawable/roundsquare_outline"
+                android:scaleType="centerCrop" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="저장"
+        style="@style/ButtonStyle"/>
+</LinearLayout>

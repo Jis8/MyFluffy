@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/icon5"
+        android:width="32dp"
+        android:height="32dp"
+        android:gravity="top|right">
+        <bitmap
+            android:src="@drawable/ic_pet" />
+    </item>
+
+
+    <item
+        android:id="@+id/icon4"
+        android:width="32dp"
+        android:height="32dp"
+        android:gravity="center|left"
+        android:right="42dp">
+        <bitmap
+            android:src="@drawable/ic_pet" />
+    </item>
+
+    <item
+        android:id="@+id/icon3"
+        android:width="32dp"
+        android:height="32dp"
+        android:gravity="center|right">
+        <bitmap
+            android:src="@drawable/ic_pet" />
+    </item>
+
+    <item
+        android:id="@+id/icon2"
+        android:width="32dp"
+        android:height="32dp"
+        android:gravity="bottom|left"
+        android:top="74dp">
+        <bitmap
+            android:src="@drawable/ic_pet" />
+    </item>
+
+    <item
+        android:id="@+id/icon1"
+        android:width="32dp"
+        android:height="32dp"
+        android:gravity="bottom|right">
+        <bitmap
+            android:src="@drawable/ic_pet" />
+    </item>
+
+</layer-list>

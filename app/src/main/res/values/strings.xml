@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">My Fluffy</string>
+
+
+    <string name="FOOD">식사</string>
+    <string name="TOILET">배변</string>
+    <string name="CLINIC">진료</string>
+    <string name="BATH">목욕</string>
+    <string name="WALK">산책</string>
+    <string name="DIARY">일기</string>
+    <string name="HAIRCUT">미용</string>
+    <string name="VACCINE">접종</string>
+    <string name="MEDICINE">투약</string>
+    <string name="ETC">기타</string>
+    <string name="SYMPTOMS">이상</string>
+    <string name="RECORD">기록</string>
+    <string name="CALENDAR">캘린더</string>
+    <string name="CLINICS">주변 병원</string>
+
+    <string name="noRecord">아직 기록이 없어요!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

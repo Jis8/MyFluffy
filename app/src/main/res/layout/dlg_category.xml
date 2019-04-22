@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/dlg_bg">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="카테고리 선택" />
+
+    <com.example.jisoo.myfluffy.RadioGridTableLayout
+        android:id="@+id/rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TableRow>
+
+            <RadioButton
+                android:id="@+id/rb1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="이상"
+                android:textSize="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="목욕"
+                android:textSize="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb3"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="미용"
+                android:textSize="15dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <RadioButton
+                android:id="@+id/rb4"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="진료"
+                android:textSize="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb5"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="투약"
+                android:textSize="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb6"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="접종"
+                android:textSize="15dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <RadioButton
+                android:id="@+id/rb7"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="ㅇㅇ"
+                android:textSize="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb8"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="일기"
+                android:textSize="15dp" />
+
+            <RadioButton
+                android:id="@+id/rb9"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="기타"
+                android:textSize="15dp" />
+        </TableRow>
+
+
+    </com.example.jisoo.myfluffy.RadioGridTableLayout>
+</LinearLayout>
