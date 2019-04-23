@@ -18,17 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="반려동물 정보 등록"
-            android:textSize="18dp" />
+            android:text="@string/toolbar_title_sign_up"
+            style="@style/ToolbarTitleStyle" />
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="32dp">
 
         <ImageButton
             android:id="@+id/ibtnInitPic"
@@ -36,125 +36,155 @@
             android:layout_height="160dp"
             android:layout_marginVertical="10dp"
             android:scaleType="centerCrop"
-            android:background="@drawable/circle" />
+            android:background="@drawable/round_square_outline" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="60dp"
-            android:paddingVertical="10dp">
-
+            android:layout_height="320dp"
+            android:background="@drawable/round_square"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp"
+            android:gravity="center">
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/sign_up_name"
+                    android:fontFamily="@font/nanum_square_b"
+                    android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="이름"
-                    android:textSize="12dp" />
+                    android:gravity="center_vertical"
+                    android:text="@string/sign_up_DOB"
+                    android:fontFamily="@font/nanum_square_b"
+                    android:textSize="14sp" />
 
-                <EditText
-                    android:id="@+id/edtInitName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:gravity="center_horizontal"
-                    android:textSize="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/sign_up_gender"
+                    android:fontFamily="@font/nanum_square_b"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/sign_up_weight"
+                    android:fontFamily="@font/nanum_square_b"
+                    android:textSize="14sp" />
+
             </LinearLayout>
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="생년월일"
-                    android:textSize="12dp" />
-
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginRight="16dp"
+                android:gravity="center">
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:gravity="center">
                     <EditText
-                        android:id="@+id/edtInitBirthYear"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/edtInitName"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:hint="YYYY"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:nextFocusDown="@id/edtInitBirthMonth" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:gravity="center"
-                        android:text="년" />
-
-                    <EditText
-                        android:id="@+id/edtInitBirthMonth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:hint="MM"
-                        android:inputType="number"
-                        android:maxLength="2"
-                        android:nextFocusDown="@id/edtInitBirthDay" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:gravity="center"
-                        android:text="월" />
-
-                    <EditText
-                        android:id="@+id/edtInitBirthDay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:hint="DD"
-                        android:inputType="number"
-                        android:maxLength="2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="center"
-                        android:text="일" />
+                        android:gravity="center_horizontal"
+                        android:textSize="14dp" />
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:layout_marginRight="30dp"
-                    android:text="성별"
-                    android:textSize="12dp" />
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5">
+                        <EditText
+                            android:id="@+id/edtInitBirthYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="YYYY"
+                            android:inputType="number"
+                            android:maxLength="4"
+                            android:nextFocusDown="@id/edtInitBirthMonth" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:gravity="center"
+                            android:text="년" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3">
+                        <EditText
+                            android:id="@+id/edtInitBirthMonth"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="MM"
+                            android:inputType="number"
+                            android:maxLength="2"
+                            android:nextFocusDown="@id/edtInitBirthDay" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:gravity="center"
+                            android:text="월" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3">
+
+                        <EditText
+                            android:id="@+id/edtInitBirthDay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:hint="DD"
+                            android:inputType="number"
+                            android:maxLength="2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:text="일" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <RadioGroup
                     android:id="@+id/rgInitGender"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_weight="1">
 
                     <RadioButton
                         android:id="@+id/rbInitGenderF"
@@ -164,52 +194,39 @@
                         android:background="@drawable/selector"
                         android:button="@null"
                         android:gravity="center"
-                        android:padding="7dp"
-                        android:text="암컷"
-                        android:textSize="15dp" />
+                        android:padding="8dp"
+                        android:text="@string/sign_up_female"
+                        android:textSize="14sp" />
 
                     <RadioButton
                         android:id="@+id/rbInitGenderM"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/selector"
                         android:button="@null"
                         android:gravity="center"
-                        android:padding="7dp"
-                        android:text="수컷"
-                        android:textSize="15dp" />
+                        android:padding="8dp"
+                        android:text="@string/sign_up_male"
+                        android:textSize="14sp" />
                 </RadioGroup>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="몸무게"
-                    android:textSize="12dp" />
-
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7"
-                    android:orientation="horizontal">
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center">
                     <EditText
                         android:id="@+id/edtInitWeight"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:inputType="numberDecimal"
                         android:maxLength="4"
-                        android:textSize="15dp" />
+                        android:textSize="14dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -218,9 +235,205 @@
                         android:gravity="center"
                         android:text="kg" />
                 </LinearLayout>
-            </LinearLayout>
 
+            </LinearLayout>
         </LinearLayout>
+        <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="32dp"
+                    android:paddingVertical="16dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/round_square"
+                        android:paddingHorizontal="32dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sign_up_name"
+                            android:textSize="12sp" />
+
+                        <EditText
+                            android:id="@+id/edtInitName"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:gravity="center_horizontal"
+                            android:textSize="15dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/round_square"
+                        android:paddingHorizontal="16dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/sign_up_DOB"
+                            android:layout_marginHorizontal="16dp"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5">
+
+                            <EditText
+                                android:id="@+id/edtInitBirthYear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:hint="YYYY"
+                                android:inputType="number"
+                                android:maxLength="4"
+                                android:nextFocusDown="@id/edtInitBirthMonth" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:text="년" />
+
+                            <EditText
+                                android:id="@+id/edtInitBirthMonth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:hint="MM"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:nextFocusDown="@id/edtInitBirthDay" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:text="월" />
+
+                            <EditText
+                                android:id="@+id/edtInitBirthDay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:hint="DD"
+                                android:inputType="number"
+                                android:maxLength="2" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:gravity="center"
+                                android:text="일" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/round_square"
+                        android:paddingHorizontal="32dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sign_up_gender"
+                            android:textSize="12sp" />
+
+                        <RadioGroup
+                            android:id="@+id/rgInitGender"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rbInitGenderF"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:padding="7dp"
+                                android:text="@string/sign_up_female"
+                                android:textSize="15dp" />
+
+                            <RadioButton
+                                android:id="@+id/rbInitGenderM"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/selector"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:padding="7dp"
+                                android:text="@string/sign_up_male"
+                                android:textSize="15dp" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/round_square"
+                        android:paddingHorizontal="32dp"
+                        android:paddingVertical="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sign_up_weight"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="5"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/edtInitWeight"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:inputType="numberDecimal"
+                                android:maxLength="4"
+                                android:textSize="15dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="5dp"
+                                android:gravity="center"
+                                android:text="kg" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+        -->
 
 
     </LinearLayout>
@@ -228,6 +441,8 @@
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp"
         android:text="등록"
-        android:background="@color/colorPrimary"/>
+        style="@style/ButtonStyle"/>
 </LinearLayout>

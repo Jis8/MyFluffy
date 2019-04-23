@@ -20,7 +20,7 @@
             android:id="@+id/ibtnMainPic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_margin="16dp"
-        android:background="@drawable/roundsquare"
+        android:background="@drawable/round_square"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginVertical="4dp"
-            android:background="@drawable/roundsquare_outline"
+            android:background="@drawable/round_square_outline"
             android:gravity="center_vertical">
 
             <LinearLayout
@@ -313,7 +313,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:drawableTop="@drawable/ic_main_food"
             android:drawablePadding="8dp"
             android:padding="20dp"
@@ -325,7 +325,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:drawableTop="@drawable/ic_main_toilet"
             android:drawablePadding="8dp"
             android:padding="20dp"
@@ -336,7 +336,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:drawableTop="@drawable/ic_main_walk"
             android:drawablePadding="8dp"
             android:padding="20dp"
@@ -354,7 +354,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:drawableTop="@drawable/ic_main_record"
             android:drawablePadding="8dp"
             android:padding="20dp"
@@ -366,7 +366,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:drawableTop="@drawable/ic_main_cal"
             android:drawablePadding="8dp"
             android:padding="20dp"
@@ -377,7 +377,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/roundsquare"
+            android:background="@drawable/round_square"
             android:drawableTop="@drawable/ic_main_clinic"
             android:drawablePadding="8dp"
             android:padding="20dp"

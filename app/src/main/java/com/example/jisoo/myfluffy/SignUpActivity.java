@@ -5,15 +5,21 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,9 +29,12 @@ import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.jisoo.myfluffy.MyValues.*;
@@ -38,6 +47,11 @@ import static com.example.jisoo.myfluffy.MyValues.*;
 
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private static final String TAG = "SignUpActivity";
+    private static final int PICK_FROM_ALBUM = 1;
+    private static final int PICK_FROM_CAMERA = 2;
+    private File tempFile;
 
     private TextView tvToolbar;
     Bitmap bitmap; // 갤러리에서 받아오는 이미지
@@ -132,7 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
                 Intent galleryIntent = new Intent();
                 galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
                 galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, 0);
+                startActivityForResult(galleryIntent, PICK_FROM_ALBUM);
             }
         });
 
@@ -195,14 +209,125 @@ public class SignUpActivity extends AppCompatActivity {
     // 갤러리에서 선택한 사진 이미지버튼에 입히기
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
+        if (resultCode != RESULT_OK) {
+            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+
+            if(tempFile != null) {
+                if (tempFile.exists()) {
+                    if (tempFile.delete()) {
+                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
+                        tempFile = null;
+                    }
+                }
+            }
+
+            return;
+        }
+
+        if (requestCode == PICK_FROM_ALBUM) {
+
+            Uri photoUri = data.getData();
+            Log.d(TAG, "PICK_FROM_ALBUM photoUri : " + photoUri);
+
+            Cursor cursor = null;
+
             try {
+
+                /*
+                 *  Uri 스키마를
+                 *  content:/// 에서 file:/// 로  변경한다.
+                 */
+                String[] proj = { MediaStore.Images.Media.DATA };
+
+                assert photoUri != null;
+                cursor = getContentResolver().query(photoUri, proj, null, null, null);
+
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                tempFile = new File(cursor.getString(column_index));
+
+                Log.d(TAG, "tempFile Uri : " + Uri.fromFile(tempFile));
+
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
+
+            setImage();
+
+        } else if (requestCode == PICK_FROM_CAMERA) {
+
+            setImage();
+
+        }
+
+            /*try {
                 //Log.v("onActivityResult","index : "+index);
                 InputStream in = getContentResolver().openInputStream(data.getData());
                 bitmap = BitmapFactory.decodeStream(in);
                 in.close();
                 ibtnInitPic.setImageBitmap(bitmap);
             } catch (IOException e) {
+            }*/
+
+
+    }
+    private void setImage() {
+
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+
+        ibtnInitPic.setImageBitmap(originalBm);
+
+    }
+    private File createImageFile() throws IOException {
+
+        // 이미지 파일 이름 ( blackJin_{시간}_ )
+        String timeStamp = C_DATE_STR;
+        String imageFileName = "_profile_" + timeStamp;
+
+        // 이미지가 저장될 폴더 이름 ( blackJin )
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/MyFluffy/");
+        if (!storageDir.exists()) storageDir.mkdirs();
+
+        // 빈 파일 생성
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+
+        return image;
+
+    }
+
+    private void takePhoto() {
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        try {
+            tempFile = createImageFile();
+        } catch (IOException e) {
+            Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            finish();
+            e.printStackTrace();
+        }
+        if (tempFile != null) {
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+
+                Uri photoUri = FileProvider.getUriForFile(this,
+                        "com.example.jisoo.myfluffy.provider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+
+            } else {
+
+                Uri photoUri = Uri.fromFile(tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, PICK_FROM_CAMERA);
+
             }
         }
     }

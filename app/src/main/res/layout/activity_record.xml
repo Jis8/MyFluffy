@@ -92,7 +92,7 @@
                 android:id="@+id/edtTitle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@drawable/roundsquare_outline"
+                android:background="@drawable/round_square_outline"
                 android:paddingHorizontal="16dp"
                 android:completionThreshold="1"
                 android:hint="제목"
@@ -142,7 +142,7 @@
             android:layout_marginVertical="5dp"
             android:padding="16dp"
             android:gravity="top"
-            android:background="@drawable/roundsquare_outline"
+            android:background="@drawable/round_square_outline"
             android:hint="메모"
             android:lineSpacingExtra="16dp"
             android:lines="5"
@@ -162,7 +162,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/roundsquare_outline"
+                android:background="@drawable/round_square_outline"
                 android:src="@drawable/ic_add_black_24dp"
                 android:scaleType="centerCrop" />
 
@@ -172,7 +172,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="10dp"
-                android:background="@drawable/roundsquare_outline"
+                android:background="@drawable/round_square_outline"
                 android:scaleType="centerCrop" />
 
             <com.example.jisoo.myfluffy.SquareImageButton
@@ -181,7 +181,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@drawable/roundsquare_outline"
+                android:background="@drawable/round_square_outline"
                 android:scaleType="centerCrop" />
         </LinearLayout>
 

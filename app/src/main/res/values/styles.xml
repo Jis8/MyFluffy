@@ -5,27 +5,35 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
-
     </style>
+
+    <!-- Toolbar Title Style -->
+    <style name="ToolbarTitleStyle">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/nanum_square_b</item>
+    </style>
+
 
     <style name="ButtonStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
         <item name="android:fontFamily">@font/nanum_square_b</item>
         <item name="android:backgroundTint">@color/colorPrimary</item>
-        <item name="android:background">@drawable/roundsquare</item>
+        <item name="android:background">@drawable/round_square</item>
     </style>
 
 
+
+    <!-- Main 6 Buttons Style -->
     <style name="ButtonDefaultText" parent="@android:style/Widget.Button">
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/nanum_square_b</item>
         <item name="android:textColor">#333333</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:paddingTop">16dp</item>
-        <item name="android:background">@drawable/roundsquare</item>
+        <item name="android:background">@drawable/round_square</item>
     </style>
 
     <style name="ButtonFoodTextWithIcon" parent="ButtonDefaultText">
