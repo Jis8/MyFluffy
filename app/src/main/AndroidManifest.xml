@@ -25,6 +25,15 @@
         <activity android:name=".InfoActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LogActivity"/>
+        <provider
+            android:authorities="com.example.jisoo.myfluffy.provider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

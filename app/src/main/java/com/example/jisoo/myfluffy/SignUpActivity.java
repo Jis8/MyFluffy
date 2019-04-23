@@ -1,15 +1,24 @@
 package com.example.jisoo.myfluffy;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,19 +28,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -43,6 +47,7 @@ import static com.example.jisoo.myfluffy.MyValues.*;
 /**
  * TODO LIST
  * 사진 선택 - DB 저장 (bitmap)
+ * https://blog.naver.com/gyeom__/220923428998
  */
 
 
@@ -51,6 +56,11 @@ public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
     private static final int PICK_FROM_ALBUM = 1;
     private static final int PICK_FROM_CAMERA = 2;
+    private static final int CROP_IMAGE = 3;
+    private static final int MY_PERMISSION_STORAGE = 0;
+    private boolean isAlbum = false; // crop 할 때 앨범에서 가져온 건지 확인
+    private String mCurrentPhotoPath; // 현재 사용 중인 (임시파일)사진 경로
+    private Uri imageURI, photoURI, albumURI;
     private File tempFile;
 
     private TextView tvToolbar;
@@ -77,30 +87,10 @@ public class SignUpActivity extends AppCompatActivity {
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
+        checkPermission(); // 권한 체크
+
         mDB = new DBAdapter(this);
         mDB.open();
-
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                Toast.makeText(SignUpActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onPermissionDenied(List<String> deniedPermissions) {
-                Toast.makeText(SignUpActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-
-        };
-
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .check();
-
-
 
         tvToolbar = (TextView) findViewById(R.id.tvToolbar);
         ibtnInitPic = (ImageButton) findViewById(R.id.ibtnInitPic);
@@ -143,10 +133,30 @@ public class SignUpActivity extends AppCompatActivity {
         ibtnInitPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent galleryIntent = new Intent();
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, PICK_FROM_ALBUM);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(SignUpActivity.this);
+                dlg.setPositiveButton("카메라", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        captureCamera();
+                    }
+                });
+                dlg.setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                dlg.setNegativeButton("앨범", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getAlbum();
+                    }
+                });
+                dlg.setCancelable(false);
+                dlg.show();
+
+
+
             }
         });
 
@@ -194,7 +204,53 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    // 권한 체크
+    private void checkPermission() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                new AlertDialog.Builder(this)
+                        .setTitle("알림")
+                        .setMessage("저장소 권한이 거부되었습니다. 사용을 원하시면 설정에서 직접 해당 권한을 허용해야합니다.")
+                        .setNeutralButton("설정", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.setData(Uri.parse("package:"+getPackageName()));
+                                startActivity(intent);
+                            }
+                        })
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+            }else {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSION_STORAGE);
+            }
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSION_STORAGE:
+                for(int i=0; i<grantResults.length; i++){
+                    // grantResults[] : 허용된 권한 0, 거부된 권한 1
+                    if(grantResults[i] < 0) {
+                        Toast.makeText(this, "해당 권한을 활성화하셔야 합니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                break;
+        }
+    }
+
+    // Back Button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -206,9 +262,53 @@ public class SignUpActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // 갤러리에서 선택한 사진 이미지버튼에 입히기
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case PICK_FROM_CAMERA:
+                isAlbum = false;
+                if(resultCode == RESULT_OK) {
+                    try {
+                        photoURI = data.getData();
+                        cropImage();
+                        ibtnInitPic.setImageURI(imageURI);
+                    } catch (Exception e) {
+
+                    }
+
+                }else {
+                    Toast.makeText(this, "사진 촬영을 취소하였습니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case PICK_FROM_ALBUM:
+                isAlbum = true;
+                if(resultCode == RESULT_OK) {
+                    if(data.getData() != null) {
+                        try {
+                            File albumFile = null;
+                            albumFile = createImageFile();
+                            photoURI = data.getData();
+                            albumURI = Uri.fromFile(albumFile);
+                            cropImage();
+                        }catch (Exception e){
+
+                        }
+                    }
+                }
+                break;
+            case CROP_IMAGE:
+                if(resultCode == RESULT_OK) {
+                    ibtnInitPic.setImageURI(data.getData());
+                }
+                break;
+        }
+
+
+
+/*
         if (resultCode != RESULT_OK) {
             Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
 
@@ -222,7 +322,31 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
             return;
-        }
+        } else {
+            switch (requestCode) {
+                case PICK_FROM_ALBUM:
+                    isAlbum = true;
+                    File albumFile = null;
+
+                    cropImage();
+                    break;
+
+                case PICK_FROM_CAMERA:
+                    isAlbum = false;
+                    galleryAddPic();
+                    cropImage();
+                    break;
+
+                case CROP_IMAGE:
+                    break;
+
+            }
+            setImage();
+
+
+
+        }*/
+/*
 
         if (requestCode == PICK_FROM_ALBUM) {
 
@@ -233,10 +357,12 @@ public class SignUpActivity extends AppCompatActivity {
 
             try {
 
-                /*
+                */
+/*
                  *  Uri 스키마를
                  *  content:/// 에서 file:/// 로  변경한다.
-                 */
+                 *//*
+
                 String[] proj = { MediaStore.Images.Media.DATA };
 
                 assert photoUri != null;
@@ -264,6 +390,7 @@ public class SignUpActivity extends AppCompatActivity {
             setImage();
 
         }
+*/
 
             /*try {
                 //Log.v("onActivityResult","index : "+index);
@@ -276,35 +403,80 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     }
-    private void setImage() {
 
+    // 이미지 버튼에 이미지 입히기
+    private void setImage() {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
 
         ibtnInitPic.setImageBitmap(originalBm);
-
     }
+
     private File createImageFile() throws IOException {
 
-        // 이미지 파일 이름 ( blackJin_{시간}_ )
-        String timeStamp = C_DATE_STR;
-        String imageFileName = "_profile_" + timeStamp;
+        // 이미지 파일 이름 ( _profile_{날짜}_ )
+        String timeStamp = new SimpleDateFormat("yyMMdd").format(new Date());
+        String imageFileName = "_profile_" + timeStamp + ".jpg";
 
-        // 이미지가 저장될 폴더 이름 ( blackJin )
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/MyFluffy/");
-        if (!storageDir.exists()) storageDir.mkdirs();
+        // 이미지가 저장될 폴더 이름 ( MyFluffy )
+        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Pictures/MyFluffy/");
+        if (!storageDir.exists()) {
+            storageDir.mkdirs(); // 폴더 없으면 생성
+//            Log.v("createImageFile TEST", "stroageDir CREATED");
+        }
+        Log.v("createImageFile TEST", "stroageDir : " + storageDir);
 
         // 빈 파일 생성
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+//        File imageFile = File.createTempFile(imageFileName, ".jpg", storageDir);
+        File imageFile = new File(storageDir, imageFileName);
+        Log.v("createImageFile TEST", "imageFile : " + imageFile);
 
-        return image;
+        mCurrentPhotoPath = imageFile.getAbsolutePath();
+        Log.v("createImageFile TEST", "mCurrentPhotoPath: " + mCurrentPhotoPath);
+
+        return imageFile;
 
     }
 
-    private void takePhoto() {
+    private void getAlbum() {
+        Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, PICK_FROM_ALBUM);
+    }
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    private void captureCamera() {
+
+        String state = Environment.getExternalStorageState();
+        // 외장 메모리 검사
+        if(Environment.MEDIA_MOUNTED.equals(state)) {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            if(cameraIntent.resolveActivity(getPackageManager()) != null) {
+                File tempFile = null;
+                try {
+                    tempFile = createImageFile();
+                    Log.v("captureCamera TEST", "tempFile: " + tempFile);
+                }catch (IOException e) {
+                    Log.e("captureCamera Error", e.toString());
+                    Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                if(tempFile != null) {
+                    imageURI = FileProvider.getUriForFile(this, "com.example.jisoo.myfluffy.provider", tempFile);
+                    Log.v("captureCamera TEST", "imageURI: " + imageURI);
+
+                    // 인텐트에 전달할 때는 FileProvider의 return 값인 content://로 전달, imageURI 값에 카메라 데이터를 넣어 보냄
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageURI);
+                    startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
+                }
+            }
+        }else {
+            Toast.makeText(this, "저장공간에 접근이 불가능한 기기입니다.", Toast.LENGTH_SHORT).show();
+        }
+
+
+        /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         try {
             tempFile = createImageFile();
@@ -314,21 +486,52 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (tempFile != null) {
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-
-                Uri photoUri = FileProvider.getUriForFile(this,
-                        "com.example.jisoo.myfluffy.provider", tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                photoURI = FileProvider.getUriForFile(this, "com.example.jisoo.myfluffy.provider", tempFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(intent, PICK_FROM_CAMERA);
+        }*/
+    }
 
-            } else {
+    private void cropImage() {
+        this.grantUriPermission("com.android.camera", photoURI,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        cropIntent.setDataAndType(photoURI, "image/*");
 
-                Uri photoUri = Uri.fromFile(tempFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                startActivityForResult(intent, PICK_FROM_CAMERA);
+        List<ResolveInfo> list = getPackageManager().queryIntentActivities(cropIntent, 0);
+        grantUriPermission(list.get(0).activityInfo.packageName, photoURI,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        int size = list.size();
 
+        if(size == 0) {
+            Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show();
+        }else {
+            cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//        cropIntent.putExtra("outputX", 200);
+//        cropIntent.putExtra("outputY", 200);
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("scale",true);
+
+            if(isAlbum){
+                cropIntent.putExtra("output", albumURI);
+            }else {
+                cropIntent.putExtra("output", photoURI);
             }
+            startActivityForResult(cropIntent, CROP_IMAGE);
+
         }
+
+    }
+
+    // 갤러리 동기화
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentURI = Uri.fromFile(f);
+        mediaScanIntent.setData(contentURI);
+        this.sendBroadcast(mediaScanIntent);
+        Toast.makeText(this, "사진이 저장되었습니다.", Toast.LENGTH_SHORT).show();
     }
 }
