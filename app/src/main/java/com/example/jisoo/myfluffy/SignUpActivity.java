@@ -279,11 +279,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        switch (requestCode) {
-            case PICK_FROM_CAMERA:
-                isAlbum = false;
-                if(resultCode == RESULT_OK) {
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PICK_FROM_CAMERA:
+                    isAlbum = false;
                     try {
                         Log.v("onActivityResult Test", "PICK_FROM_CAMERA imageURI: " + imageURI);
                         cropImage();
@@ -292,75 +291,42 @@ public class SignUpActivity extends AppCompatActivity {
                         Log.v("onActivityResult Test", "PICK_FROM_CAMERA ERROR!!!!: " + e.toString());
                     }
 
-                }else {
-                    Toast.makeText(this, "사진 촬영을 취소하였습니다.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case PICK_FROM_ALBUM:
-                isAlbum = true;
-                if(resultCode == RESULT_OK) {
-                    if(data.getData() != null) {
+                    break;
+                case PICK_FROM_ALBUM:
+                    isAlbum = true;
+
+                    if (data.getData() != null) {
                         try {
                             File albumFile = null;
                             albumFile = createImageFile();
                             photoURI = data.getData();
                             albumURI = Uri.fromFile(albumFile);
                             cropImage();
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
                     }
-                }
-                break;
-            case CROP_IMAGE:
-                if(resultCode == RESULT_OK) {
+
+                    break;
+                case CROP_IMAGE:
                     ibtnInitPic.setImageURI(data.getData());
                     Log.v("onActivityResult Test", "CROP_IMAGE data.getData(): " + data.getData());
-
-                }
-                break;
-        }
-
-
-
-/*
-        if (resultCode != RESULT_OK) {
-            Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
-
+                    break;
+            }
+        }else{
+            Toast.makeText(this, "취소되었습니다", Toast.LENGTH_SHORT).show();
             if(tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
-                        Log.e(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
+                        Log.v(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
                         tempFile = null;
                     }
                 }
             }
-
-            return;
-        } else {
-            switch (requestCode) {
-                case PICK_FROM_ALBUM:
-                    isAlbum = true;
-                    File albumFile = null;
-
-                    cropImage();
-                    break;
-
-                case PICK_FROM_CAMERA:
-                    isAlbum = false;
-                    galleryAddPic();
-                    cropImage();
-                    break;
-
-                case CROP_IMAGE:
-                    break;
-
-            }
-            setImage();
+        }
 
 
 
-        }*/
 /*
 
         if (requestCode == PICK_FROM_ALBUM) {
