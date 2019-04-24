@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -52,12 +53,14 @@ import static com.example.jisoo.myfluffy.MyValues.*;
 
 
 public class SignUpActivity extends AppCompatActivity {
+    private String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}; //권한 설정 변수
+    private static final int MULTIPLE_PERMISSIONS = 101; //권한 동의 여부 문의 후 CallBack 함수에 쓰일 변수
+
 
     private static final String TAG = "SignUpActivity";
     private static final int PICK_FROM_ALBUM = 1;
     private static final int PICK_FROM_CAMERA = 2;
     private static final int CROP_IMAGE = 3;
-    private static final int MY_PERMISSION_STORAGE = 0;
     private boolean isAlbum = false; // crop 할 때 앨범에서 가져온 건지 확인
     private String mCurrentPhotoPath; // 현재 사용 중인 (임시파일)사진 경로
     private Uri imageURI, photoURI, albumURI;
@@ -206,39 +209,49 @@ public class SignUpActivity extends AppCompatActivity {
 
     // 권한 체크
     private void checkPermission() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                new AlertDialog.Builder(this)
-                        .setTitle("알림")
-                        .setMessage("저장소 권한이 거부되었습니다. 사용을 원하시면 설정에서 직접 해당 권한을 허용해야합니다.")
-                        .setNeutralButton("설정", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.setData(Uri.parse("package:"+getPackageName()));
-                                startActivity(intent);
-                            }
-                        })
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        })
-                        .setCancelable(false)
-                        .create()
-                        .show();
-            }else {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSION_STORAGE);
+
+        List<String> permissionList = new ArrayList<>();
+        for (String pm : permissions) {
+            if (ContextCompat.checkSelfPermission(this, pm) != PackageManager.PERMISSION_GRANTED) { //사용자가 해당 권한을 가지고 있지 않을 경우 리스트에 해당 권한명 추가
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    new AlertDialog.Builder(this)
+                            .setTitle("알림")
+                            .setMessage("저장소 권한이 거부되었습니다. 사용을 원하시면 설정에서 직접 해당 권한을 허용해야합니다.")
+                            .setNeutralButton("설정", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.setData(Uri.parse("package:"+getPackageName()));
+                                    startActivity(intent);
+                                }
+                            })
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            })
+                            .setCancelable(false)
+                            .create()
+                            .show();
+                }else {
+                    permissionList.add(pm);
+                }
             }
         }
+        if (!permissionList.isEmpty()) { //권한이 추가되었으면 해당 리스트가 empty가 아니므로 request 즉 권한을 요청합니다.
+            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[permissionList.size()]), MULTIPLE_PERMISSIONS);
+            //return false;
+        }
+        //return true;
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
-            case MY_PERMISSION_STORAGE:
+            case MULTIPLE_PERMISSIONS:
                 for(int i=0; i<grantResults.length; i++){
                     // grantResults[] : 허용된 권한 0, 거부된 권한 1
                     if(grantResults[i] < 0) {
@@ -272,11 +285,11 @@ public class SignUpActivity extends AppCompatActivity {
                 isAlbum = false;
                 if(resultCode == RESULT_OK) {
                     try {
-                        photoURI = data.getData();
+                        Log.v("onActivityResult Test", "PICK_FROM_CAMERA imageURI: " + imageURI);
                         cropImage();
                         ibtnInitPic.setImageURI(imageURI);
                     } catch (Exception e) {
-
+                        Log.v("onActivityResult Test", "PICK_FROM_CAMERA ERROR!!!!: " + e.toString());
                     }
 
                 }else {
@@ -302,6 +315,8 @@ public class SignUpActivity extends AppCompatActivity {
             case CROP_IMAGE:
                 if(resultCode == RESULT_OK) {
                     ibtnInitPic.setImageURI(data.getData());
+                    Log.v("onActivityResult Test", "CROP_IMAGE data.getData(): " + data.getData());
+
                 }
                 break;
         }
@@ -447,6 +462,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void captureCamera() {
+        Log.v("captureCamera TEST", "CALLED");
 
         String state = Environment.getExternalStorageState();
         // 외장 메모리 검사
@@ -459,7 +475,7 @@ public class SignUpActivity extends AppCompatActivity {
                     tempFile = createImageFile();
                     Log.v("captureCamera TEST", "tempFile: " + tempFile);
                 }catch (IOException e) {
-                    Log.e("captureCamera Error", e.toString());
+                    Log.e("captureCamera TEST Error", e.toString());
                     Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 if(tempFile != null) {
@@ -493,21 +509,21 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void cropImage() {
-        this.grantUriPermission("com.android.camera", photoURI,
+        Log.v("cropImage TEST", "CALL");
+        this.grantUriPermission("com.android.camera", imageURI,
                 Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
         Intent cropIntent = new Intent("com.android.camera.action.CROP");
-        cropIntent.setDataAndType(photoURI, "image/*");
+        cropIntent.setDataAndType(imageURI, "image/*");
 
         List<ResolveInfo> list = getPackageManager().queryIntentActivities(cropIntent, 0);
-        grantUriPermission(list.get(0).activityInfo.packageName, photoURI,
-                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
         int size = list.size();
 
         if(size == 0) {
             Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show();
         }else {
-            cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            cropIntent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 //        cropIntent.putExtra("outputX", 200);
 //        cropIntent.putExtra("outputY", 200);
             cropIntent.putExtra("aspectX", 1);
@@ -517,7 +533,7 @@ public class SignUpActivity extends AppCompatActivity {
             if(isAlbum){
                 cropIntent.putExtra("output", albumURI);
             }else {
-                cropIntent.putExtra("output", photoURI);
+                cropIntent.putExtra("output", imageURI);
             }
             startActivityForResult(cropIntent, CROP_IMAGE);
 
