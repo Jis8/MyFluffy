@@ -299,8 +299,8 @@ public class SignUpActivity extends AppCompatActivity {
                         try {
                             File albumFile = null;
                             albumFile = createImageFile();
-                            photoURI = data.getData();
-                            albumURI = Uri.fromFile(albumFile);
+                            albumURI = data.getData();
+                            //albumURI = Uri.fromFile(albumFile);
                             cropImage();
                         } catch (Exception e) {
 
@@ -424,7 +424,7 @@ public class SignUpActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent();
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
-        startActivityForResult(galleryIntent, PICK_FROM_ALBUM);
+        startActivityForResult(Intent.createChooser(galleryIntent, "Get Album"), PICK_FROM_ALBUM);
     }
 
     private void captureCamera() {
