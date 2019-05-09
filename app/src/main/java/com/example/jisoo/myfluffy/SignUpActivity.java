@@ -299,8 +299,8 @@ public class SignUpActivity extends AppCompatActivity {
                         try {
                             File albumFile = null;
                             albumFile = createImageFile();
-                            albumURI = data.getData();
-                            //albumURI = Uri.fromFile(albumFile);
+                            //albumURI = data.getData();
+                            albumURI = Uri.fromFile(albumFile);
                             cropImage();
                         } catch (Exception e) {
 
@@ -397,7 +397,7 @@ public class SignUpActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
 
         // 이미지 파일 이름 ( _profile_{날짜}_ )
-        String timeStamp = new SimpleDateFormat("yyMMdd").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyMMddhhmmss").format(new Date());
         String imageFileName = "_profile_" + timeStamp + ".jpg";
 
         // 이미지가 저장될 폴더 이름 ( MyFluffy )

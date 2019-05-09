@@ -162,11 +162,11 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
             public void onClick(View v) {
                 if(mode == DAILY){
                     mode = MONTHLY;
-                    tbBtnSwitch.setText("일간");
+                    tbBtnSwitch.setText("목록");
                     frag = LogMonthlyFragment.newInstance();
                 } else if(mode == MONTHLY){
                     mode = DAILY;
-                    tbBtnSwitch.setText("월간");
+                    tbBtnSwitch.setText("달력");
                     frag = LogDailyFragment.newInstance();
                 }
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

@@ -14,126 +14,169 @@
 
     <com.example.jisoo.myfluffy.RadioGridTableLayout
         android:id="@+id/rg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:padding="15dp">
 
+
+        <TableRow
+            android:id="@+id/tr1"
+            android:visibility="gone">
+            <com.example.jisoo.myfluffy.RadioSquareButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/FOOD"
+                android:textSize="14dp" />
+
+            <com.example.jisoo.myfluffy.RadioSquareButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/TOILET"
+                android:textSize="14dp" />
+
+            <com.example.jisoo.myfluffy.RadioSquareButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/WALK"
+                android:textSize="14dp" />
+
+
+        </TableRow>
+
+
         <TableRow>
 
-            <RadioButton
+            <com.example.jisoo.myfluffy.RadioSquareButton
                 android:id="@+id/rb1"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="이상"
-                android:textSize="15dp" />
+                android:text="@string/SYMPTOMS"
+                android:textSize="14dp" />
 
-            <RadioButton
+
+
+            <com.example.jisoo.myfluffy.RadioSquareButton
                 android:id="@+id/rb2"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="목욕"
-                android:textSize="15dp" />
+                android:text="@string/BATH"
+                android:textSize="14dp" />
 
-            <RadioButton
+            <com.example.jisoo.myfluffy.RadioSquareButton
                 android:id="@+id/rb3"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="미용"
-                android:textSize="15dp" />
-        </TableRow>
+                android:text="@string/HAIRCUT"
+                android:textSize="14dp" />
 
-        <TableRow>
-
-            <RadioButton
+            <com.example.jisoo.myfluffy.RadioSquareButton
                 android:id="@+id/rb4"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="진료"
-                android:textSize="15dp" />
-
-            <RadioButton
-                android:id="@+id/rb5"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
-                android:button="@null"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="투약"
-                android:textSize="15dp" />
-
-            <RadioButton
-                android:id="@+id/rb6"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
-                android:button="@null"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="접종"
-                android:textSize="15dp" />
+                android:text="@string/CLINIC"
+                android:textSize="14dp" />
         </TableRow>
 
         <TableRow>
 
-            <RadioButton
-                android:id="@+id/rb7"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+
+            <com.example.jisoo.myfluffy.RadioSquareButton
+                android:id="@+id/rb5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="ㅇㅇ"
-                android:textSize="15dp" />
+                android:text="@string/MEDICINE"
+                android:textSize="14dp" />
 
-            <RadioButton
+            <com.example.jisoo.myfluffy.RadioSquareButton
+                android:id="@+id/rb6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/VACCINE"
+                android:textSize="14dp" />
+
+            <com.example.jisoo.myfluffy.RadioSquareButton
                 android:id="@+id/rb8"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="일기"
-                android:textSize="15dp" />
+                android:text="@string/DIARY"
+                android:textSize="14dp" />
 
-            <RadioButton
+            <com.example.jisoo.myfluffy.RadioSquareButton
                 android:id="@+id/rb9"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/selector"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="6dp"
+                android:background="@drawable/selector_round"
                 android:button="@null"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="기타"
-                android:textSize="15dp" />
+                android:text="@string/ETC"
+                android:textSize="14dp" />
+
         </TableRow>
+
+
 
 
     </com.example.jisoo.myfluffy.RadioGridTableLayout>

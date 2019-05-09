@@ -310,6 +310,7 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnFood"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -321,6 +322,7 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnToilet"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
@@ -333,6 +335,7 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnWalk"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -351,6 +354,7 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnRecord"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -362,6 +366,7 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnMonthly"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="16dp"
@@ -374,6 +379,7 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnClinic"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

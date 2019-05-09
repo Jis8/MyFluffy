@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
-        android:src="@drawable/ic_add_circle_black_24dp"
-        app:backgroundTint="@android:color/transparent" />
+        android:src="@drawable/ic_add"
+        android:tint="@color/white" />
 </FrameLayout>

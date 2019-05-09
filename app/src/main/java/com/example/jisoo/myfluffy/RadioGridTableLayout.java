@@ -11,7 +11,7 @@ import android.widget.TableRow;
 public class RadioGridTableLayout extends TableLayout implements View.OnClickListener {
 
 
-    private RadioButton activeRadioButton;
+    private RadioSquareButton activeRadioButton;
 
     public RadioGridTableLayout(Context context) {
         super(context);
@@ -23,7 +23,7 @@ public class RadioGridTableLayout extends TableLayout implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        final RadioButton rb = (RadioButton) v;
+        final RadioSquareButton rb = (RadioSquareButton) v;
         if( activeRadioButton != null){
             activeRadioButton.setChecked(false);
         }
@@ -45,9 +45,9 @@ public class RadioGridTableLayout extends TableLayout implements View.OnClickLis
 
     private void setChildrenOnClickListener(TableRow tr){
         final int c = tr.getChildCount();
-        for(int i=0; i<3; i++){
+        for(int i=0; i<4; i++){
             final View v = tr.getChildAt(i);
-            if( v instanceof RadioButton){
+            if( v instanceof RadioSquareButton){
                 v.setOnClickListener(this);
             }
         }
