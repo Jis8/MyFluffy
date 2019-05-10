@@ -39,9 +39,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:orientation="horizontal"
+            android:orientation="horizontal">
 
-            >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -74,6 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginBottom="10dp"
+        android:padding="16dp"
+        android:background="@drawable/round_square_outline"
         android:text="여기는 메모자리 메모메모" />
 
     <LinearLayout
@@ -86,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="@style/ButtonStyle_roundSquare"
             android:text="수정" />
 
         <Button
@@ -93,6 +95,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginHorizontal="48dp"
+            style="@style/ButtonStyle_roundSquare"
             android:text="삭제" />
 
         <Button
@@ -100,6 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="@style/ButtonStyle_roundSquare"
             android:text="확인" />
     </LinearLayout>
 </LinearLayout>

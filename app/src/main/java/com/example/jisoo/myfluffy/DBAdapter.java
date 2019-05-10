@@ -8,11 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import java.util.ArrayList;
 
 public class DBAdapter {
-
 
     private static final String TAG = "DbAdapter";
     private DatabaseHelper mDBHelper;
@@ -26,6 +24,7 @@ public class DBAdapter {
     private static final String TABLE_WEIGHT = "weightTBL";
     private static final String TABLE_RECORD = "recordTBL";
 
+    private static final String ROW_ID = "_id";
     // Info Table Field Names
     private static final String KEY_IMG = "img";
     private static final String KEY_NAME = "name";
@@ -33,7 +32,6 @@ public class DBAdapter {
     private static final String KEY_GENDER = "gender";
     private static final String KEY_INITWEIGHT = "initWeight";
     private static final String KEY_INITDATE = "initDate";
-    private static final String ROW_ID = "_id";
     // Weight Table Field Names
     private static final String KEY_WDATE = "wDate";
     private static final String KEY_WEIGHT = "weight";

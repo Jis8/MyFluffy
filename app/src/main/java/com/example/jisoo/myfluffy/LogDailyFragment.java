@@ -26,9 +26,7 @@ import java.util.ArrayList;
 import static com.example.jisoo.myfluffy.MyValues.*;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class LogDailyFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -49,14 +47,7 @@ public class LogDailyFragment extends Fragment {
     public LogDailyFragment() {
         // Required empty public constructor
     }
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * //@param date Parameter 1.
-     * @return A new instance of fragment LogDailyFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static LogDailyFragment newInstance() {
         LogDailyFragment fragment = new LogDailyFragment();
         Bundle args = new Bundle();
@@ -118,6 +109,10 @@ public class LogDailyFragment extends Fragment {
             }
         });
 
+
+        /** TODO
+            대화상자에서 BACK BUTTON 동작 안함
+         */
         // 아이템 클릭 이벤트 > 상세 dialog
         dailyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -196,6 +191,7 @@ public class LogDailyFragment extends Fragment {
         Log.v("Test_Daily","setData() : "+ mDateStr);
 
         /**
+         * TODO
          * 선택 카테고리말고 전체 기록 가져온 다음 리스트 저장하고 정렬해서 뽑을 수는 없을까
          * 그럼 업데이트를 어떻게 즉각 반영하지?????
          * BroadcastReceiver로 DB 변경될 때만 실행??? 굳이 필요한가..?

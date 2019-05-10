@@ -45,7 +45,7 @@ public class RadioGridTableLayout extends TableLayout implements View.OnClickLis
 
     private void setChildrenOnClickListener(TableRow tr){
         final int c = tr.getChildCount();
-        for(int i=0; i<4; i++){
+        for(int i=0; i<c; i++){
             final View v = tr.getChildAt(i);
             if( v instanceof RadioSquareButton){
                 v.setOnClickListener(this);

@@ -18,10 +18,16 @@
     </style>
 
 
-    <style name="ButtonStyle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+    <style name="ButtonStyle_roundSquare" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
         <item name="android:fontFamily">@font/nanum_square_b</item>
         <item name="android:backgroundTint">@color/colorPrimary</item>
         <item name="android:background">@drawable/round_square</item>
+    </style>
+
+    <style name="ButtonStyle_circle" parent="@android:style/Widget.DeviceDefault.Button.Borderless">
+        <item name="android:fontFamily">@font/nanum_square_b</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:background">@drawable/circle_solid</item>
     </style>
 
 

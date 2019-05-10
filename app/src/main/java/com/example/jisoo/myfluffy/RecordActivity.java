@@ -131,7 +131,7 @@ public class RecordActivity extends AppCompatActivity {
             }
 
             if(mode == 2){ // 수정할 때 Log_Daily Dialog에서 들어옴
-                tvToolbar.setText("기록 수정");
+                tvToolbar.setText(category + " 기록 수정");
                 btnSave.setText("수정");
                 date_o = intent.getStringExtra("Date");
                 title_o = intent.getStringExtra("Title");
