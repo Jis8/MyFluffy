@@ -39,7 +39,7 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
     private Button tbBtnPrev, tbBtnNext, tbBtnNow, tbBtnSwitch;
     private TextView tbTvDate, tbTvYear;
 
-    private LinearLayout linearCategory;
+    private LinearLayout tbLlDate, linearCategory;
     private ArrayList<String> selectedCategory;
 
     private DBAdapter mDB;
@@ -67,7 +67,7 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
         tbBtnSwitch = (Button) findViewById(R.id.tbBtnSwitch);
         tbTvDate = (TextView) findViewById(R.id.tbTvDate);
         tbTvYear = (TextView) findViewById(R.id.tbTvYear);
-
+        tbLlDate = (LinearLayout) findViewById(R.id.tbLlDate);
         linearCategory = (LinearLayout) findViewById(R.id.linearCategory);
         selectedCategory = new ArrayList<String>();
 
@@ -81,6 +81,13 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
         Log.v("Test_Log","intent mode : "+ mode);
 
 
+
+        tbLlDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialogWithoutDateField().show();
+            }
+        });
 
         /**
          * 처음에는 전체선택 되어있게 cbAll.setChecked(true); cateCnt = 9;
@@ -281,4 +288,34 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
         Log.v("Test_Log", "onDaySet frag : " + frag);
 
     }
+
+
+    private DatePickerDialog createDialogWithoutDateField() {
+        DatePickerDialog dpd = new DatePickerDialog(this, null, 2014, 1, 24);
+        try {
+            java.lang.reflect.Field[] datePickerDialogFields = dpd.getClass().getDeclaredFields();
+            for (java.lang.reflect.Field datePickerDialogField : datePickerDialogFields) {
+                if (datePickerDialogField.getName().equals("mDatePicker")) {
+                    datePickerDialogField.setAccessible(true);
+                    DatePicker datePicker = (DatePicker) datePickerDialogField.get(dpd);
+                    java.lang.reflect.Field[] datePickerFields = datePickerDialogField.getType().getDeclaredFields();
+                    for (java.lang.reflect.Field datePickerField : datePickerFields) {
+                        Log.i("test", datePickerField.getName());
+                        if ("mDaySpinner".equals(datePickerField.getName())) {
+                            datePickerField.setAccessible(true);
+                            Object dayPicker = datePickerField.get(datePicker);
+                            ((View) dayPicker).setVisibility(View.GONE);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception ex) {
+        }
+        return dpd;
+    }
+
+
+
+
 }

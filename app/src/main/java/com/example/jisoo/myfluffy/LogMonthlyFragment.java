@@ -120,7 +120,7 @@ public class LogMonthlyFragment extends Fragment {
                 day = (position + 1) - (dayFirst - 1); // position은 0부터 시작하고 dayFirst는 1부터 시작함... 뭐래 모르겠어 암튼 일케해야맞게나옴
                 Log.v("Monthly_itemClick test", "dayFirst : " + dayFirst + ", dayMax : " + dayMax + ", day : " + day + ", position : " + position);
                 if (0 < day && day <= dayMax) { // 있는 날짜 클릭했을 때만
-                    Toast.makeText(getActivity().getApplicationContext(), mDate.getYear() + "년 " + mDate.getMonthValue() + "월" + day + "일 기록으로 이동합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), mDate.getYear() + "년 " + mDate.getMonthValue() + "월 " + day + "일 기록으로 이동합니다.", Toast.LENGTH_SHORT).show();
                     mDate = LocalDate.of(mDate.getYear(), mDate.getMonth(), day);
                     dp.onDaySet(1, mDate);
                 }

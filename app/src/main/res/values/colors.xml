@@ -6,15 +6,16 @@
     <color name="black">#000000</color>
 
     <color name="colorPrimaryLight">#fcd277</color>
-    <color name="colorPrimary">#fecd57</color>
+    <color name="colorPrimary">#ffce55</color>
     <color name="colorPrimaryDark">#f5ba45</color>
 
     <color name="colorAccent">#fecd57</color>
 
-    <color name="pink">#000000</color>
-    <color name="orange">#000000</color>
-    <color name="green">#000000</color>
-    <color name="blue">#000000</color>
+    <color name="red">#ec5564</color>
+    <color name="orange">#ff884d</color>
+    <color name="yellow">#ffce55</color>
+    <color name="green">#9ed36a</color>
+    <color name="blue">#4fc0e8</color>
 
 
 </resources>

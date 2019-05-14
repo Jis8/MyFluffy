@@ -49,7 +49,7 @@ public class RecordActivity extends AppCompatActivity {
     Button btnCategory, btnSave;
     ImageButton ibtnPic[] = new ImageButton[3];
     int[] ibtnPicID = {R.id.ibtnPic1, R.id.ibtnPic2, R.id.ibtnPic3};
-    LinearLayout linearDateTime, linearIB;
+    LinearLayout linearTitle, linearDateTime, linearIB;
     RadioGroup rgToilet;
     AutoCompleteTextView edtTitle;
     ArrayList<String> titleList = new ArrayList<>();
@@ -92,6 +92,7 @@ public class RecordActivity extends AppCompatActivity {
 //        btnCategory = (Button)findViewById(R.id.btnCategory);
         rgToilet = (RadioGroup)findViewById(R.id.rgToilet);
         btnSave = (Button)findViewById(R.id.btnSave);
+        linearTitle = (LinearLayout)findViewById(R.id.linearTitle);
         linearDateTime = (LinearLayout)findViewById(R.id.linearDateTime);
         edtTitle = (AutoCompleteTextView) findViewById(R.id.edtTitle);
         edtContent = (EditText)findViewById(R.id.edtContent);
@@ -126,7 +127,7 @@ public class RecordActivity extends AppCompatActivity {
             tvToolbar.setText(category + " 기록");
 
             if(category.equals("배변")) {
-                edtTitle.setVisibility(View.INVISIBLE);
+                linearTitle.setVisibility(View.INVISIBLE);
                 rgToilet.setVisibility(View.VISIBLE);
             }
 

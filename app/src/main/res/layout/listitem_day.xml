@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="56dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="5dp">
+    android:padding="4dp">
 
     <!--<ImageView
         android:id="@+id/ivCategory"
@@ -13,23 +13,39 @@
         android:layout_weight="1"
         android:gravity="center"
         android:background="#555555"/>-->
-    <TextView
-        android:id="@+id/tvCategory"
+    <LinearLayout
+        android:id="@+id/llCate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#dddddd"
+        android:background="@drawable/round_square"
         android:gravity="center"
-        android:padding="5dp"
+        android:paddingHorizontal="4dp">
+        <ImageView
+            android:id="@+id/ivCate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_symptoms"
+            android:maxHeight="32dp"
+            android:maxWidth="32dp"
+            android:adjustViewBounds="true"/>
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:fontFamily="@font/nanum_square_b"
         android:text="cate"
         android:textSize="14dp" />
-
+    </LinearLayout>
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:fontFamily="@font/nanum_square_b"
         android:text="00:00"
         android:textSize="14dp" />
 
@@ -39,6 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="left"
+        android:singleLine="true"
+        android:fontFamily="@font/nanum_square_b"
         android:text="Title"
         android:textSize="14dp" />
 
@@ -48,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:singleLine="true"
+        android:fontFamily="@font/nanum_square_r"
         android:text="Content... blah...blah..."
         android:textSize="12dp" />
 </LinearLayout>

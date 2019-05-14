@@ -35,6 +35,8 @@
                 android:id="@+id/tvMainName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanum_square_r"
+                android:textSize="14dp"
                 android:text="NAME" />
 
             <TextView
@@ -42,12 +44,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="10dp"
+                android:fontFamily="@font/nanum_square_r"
+                android:textSize="14dp"
                 android:text="AGE" />
 
             <TextView
                 android:id="@+id/tvMainWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanum_square_r"
+                android:textSize="14dp"
                 android:text="WEIGHT" />
 
         </LinearLayout>
@@ -96,12 +102,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:fontFamily="@font/nanum_square_b"
                     android:text="1 회"
                     android:textSize="14sp" />
                 <TextView
                     android:id="@+id/tvTodayLastMeal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_r"
                     android:text="(0시간전)"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -122,6 +130,7 @@
                     android:id="@+id/tvTodayPeeCnt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_b"
                     android:layout_margin="5dp"
                     android:text="1회"
                     android:textSize="14sp" />
@@ -129,6 +138,7 @@
                     android:id="@+id/tvTodayPooCnt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanum_square_b"
                     android:layout_margin="5dp"
                     android:text="1회"
                     android:textSize="14sp" />
@@ -146,6 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:fontFamily="@font/nanum_square_b"
                 android:text="@string/noRecord"
                 android:textSize="14sp"
                 android:visibility="visible" />
@@ -176,6 +187,7 @@
                         android:background="#dddddd"
                         android:gravity="center"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="cate"
                         android:textSize="14sp" />
 
@@ -184,6 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="08:09"
                         android:textSize="14sp" />
 
@@ -192,6 +205,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:singleLine="true"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="title"
                         android:textSize="14sp" />
 
@@ -200,6 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
+                        android:fontFamily="@font/nanum_square_r"
                         android:text="contentccccccccccccccccccdddddddddccc"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -223,6 +239,7 @@
                         android:background="#dddddd"
                         android:gravity="center"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="cate"
                         android:textSize="14sp" />
 
@@ -231,6 +248,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="08:09"
                         android:textSize="14sp" />
 
@@ -239,6 +257,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="title"
                         android:textSize="14sp" />
 
@@ -247,6 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
+                        android:fontFamily="@font/nanum_square_r"
                         android:text="contentccccccccccccccccccdddddddddccc"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -269,6 +289,7 @@
                         android:background="#dddddd"
                         android:gravity="center"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="cate"
                         android:textSize="14sp" />
 
@@ -277,6 +298,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="08:09"
                         android:textSize="14sp" />
 
@@ -285,6 +307,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:fontFamily="@font/nanum_square_b"
                         android:text="title"
                         android:textSize="14sp" />
 
@@ -293,6 +316,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
+                        android:fontFamily="@font/nanum_square_r"
                         android:text="contentccccccccccccccccccdddddddddccc"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -310,39 +334,31 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnFood"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/round_square"
+            style="@style/ButtonDefaultText"
             android:drawableTop="@drawable/ic_main_food"
-            android:drawablePadding="8dp"
-            android:padding="20dp"
             android:text="@string/FOOD" />
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnToilet"
-            style="?android:attr/borderlessButtonStyle"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:background="@drawable/round_square"
+            android:layout_marginHorizontal="16dp"
+            style="@style/ButtonDefaultText"
             android:drawableTop="@drawable/ic_main_toilet"
-            android:drawablePadding="8dp"
-            android:padding="20dp"
             android:text="@string/TOILET" />
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnWalk"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/round_square"
+            style="@style/ButtonDefaultText"
             android:drawableTop="@drawable/ic_main_walk"
-            android:drawablePadding="8dp"
-            android:padding="20dp"
             android:text="@string/WALK" />
     </LinearLayout>
 
@@ -354,39 +370,30 @@
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnRecord"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/round_square"
+            style="@style/ButtonDefaultText"
             android:drawableTop="@drawable/ic_main_record"
-            android:drawablePadding="8dp"
-            android:padding="20dp"
             android:text="@string/RECORD" />
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnMonthly"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:background="@drawable/round_square"
+            android:layout_marginHorizontal="16dp"
+            style="@style/ButtonDefaultText"
             android:drawableTop="@drawable/ic_main_cal"
-            android:drawablePadding="8dp"
-            android:padding="20dp"
             android:text="@string/CALENDAR" />
 
         <com.example.jisoo.myfluffy.SquareButton
             android:id="@+id/btnClinic"
-            style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/round_square"
+            style="@style/ButtonDefaultText"
             android:drawableTop="@drawable/ic_main_clinic"
-            android:drawablePadding="8dp"
-            android:padding="20dp"
             android:text="@string/CLINICS" />
     </LinearLayout>
 </LinearLayout>

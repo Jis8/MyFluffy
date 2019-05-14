@@ -1,6 +1,7 @@
 package com.example.jisoo.myfluffy;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.time.LocalDate;
@@ -102,10 +108,38 @@ public class LogDailyFragment extends Fragment {
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                /*Intent intent = new Intent(getActivity(), RecordActivity.class);
                 intent.putExtra("Mode", 1);
                 intent.putExtra("Category", FOOD); // 카테고리 선택 창 띄우기
-                startActivity(intent);
+                startActivity(intent);*/
+
+
+
+                final android.app.AlertDialog.Builder dlgRecord = new android.app.AlertDialog.Builder(getActivity());
+                final View viewDlgCategory = (View)View.inflate(getActivity(), R.layout.dlg_category, null);
+                dlgRecord.setView(viewDlgCategory);
+                dlgRecord.setPositiveButton("선택 완료", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        RadioGridTableLayout rg = (RadioGridTableLayout) viewDlgCategory.findViewById(R.id.rg);
+                        int rbID = rg.getCheckedRadioButtonId();
+                        Log.v("DlgRecord", "rbID : "+ rbID);
+
+                        if(rbID != -1){
+                            RadioButton rb = (RadioButton)viewDlgCategory.findViewById(rbID);
+                            String category = rb.getText().toString();
+                            Intent intent = new Intent(getActivity(), RecordActivity.class);
+                            intent.putExtra("Mode", 1);
+                            intent.putExtra("Category", category);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(getActivity(), "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                            fabAdd.callOnClick();
+                        }
+                    }
+                });
+                dlgRecord.setNegativeButton("취소", null);
+                dlgRecord.show();
             }
         });
 
@@ -246,6 +280,7 @@ public class LogDailyFragment extends Fragment {
             return position;
         }
 
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             final int pos = position;
@@ -256,6 +291,8 @@ public class LogDailyFragment extends Fragment {
                 convertView = inflater.inflate(R.layout.listitem_day, parent, false);
             }
 
+            LinearLayout llCate = (LinearLayout) convertView.findViewById(R.id.llCate);
+            ImageView ivCate = (ImageView) convertView.findViewById(R.id.ivCate);
             TextView tvCategory = (TextView) convertView.findViewById(R.id.tvCategory);
             TextView tvTime = (TextView) convertView.findViewById(R.id.tvTime);
             TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
@@ -268,6 +305,54 @@ public class LogDailyFragment extends Fragment {
             tvTime.setText(listViewItem.getStrTime());
             tvTitle.setText(listViewItem.getStrTitle());
             tvContent.setText(listViewItem.getStrContent());
+
+            switch (listViewItem.getStrCategory()) {
+                case FOOD:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    ivCate.setImageResource(R.drawable.ic_food);
+                    break;
+                case TOILET:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    ivCate.setImageResource(R.drawable.ic_toilet);
+                    break;
+                case WALK:
+                    Log.v("CATEGORY COLOR TEST", "FOOD / TOILET / WALK");
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.yellow));
+                    ivCate.setImageResource(R.drawable.ic_walk);
+                    break;
+                case SYMPTOMS:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+                    ivCate.setImageResource(R.drawable.ic_symptoms);
+                    break;
+                case CLINIC:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+                    ivCate.setImageResource(R.drawable.ic_clinic);
+                    break;
+                case MEDICINE:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                    ivCate.setImageResource(R.drawable.ic_medicine);
+                    break;
+                case VACCINE:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.orange));
+                    ivCate.setImageResource(R.drawable.ic_vaccine);
+                    break;
+                case DIARY:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                    ivCate.setImageResource(R.drawable.ic_diary);
+                    break;
+                case ETC:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.green));
+                    ivCate.setImageResource(R.drawable.ic_etc);
+                    break;
+                case BATH:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue));
+                    ivCate.setImageResource(R.drawable.ic_bath);
+                    break;
+                case HAIRCUT:
+                    llCate.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.blue));
+                    ivCate.setImageResource(R.drawable.ic_haircut);
+                    break;
+            }
 
             return convertView;
         }
