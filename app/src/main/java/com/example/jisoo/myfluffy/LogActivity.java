@@ -119,9 +119,27 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
         tbTvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog dp = new DatePickerDialog(LogActivity.this, dpListener, mDate.getYear(), mDate.getMonthValue()-1, mDate.getDayOfMonth());
-                dp.show();
-                // monthly에서는 monthpicker 구현해야함
+                if(mode == DAILY) {
+                    DatePickerDialog dp = new DatePickerDialog(LogActivity.this, dpListener, mDate.getYear(), mDate.getMonthValue() - 1, mDate.getDayOfMonth());
+                    dp.show();
+                    // monthly에서는 monthpicker 구현해야함
+                }else {
+
+                    // 날짜 선택 대화상자
+                    final MonthYearPickerDIalog myDlg = MonthYearPickerDIalog.newInstance(mDate.getYear(), mDate.getMonthValue());
+                    myDlg.setDialogListener(new MonthYearPickerDIalog.MyDialogListener() {
+                        @Override
+                        public void onOKClicked() {
+
+                        }
+
+                        @Override
+                        public void onCancelClicked() {
+
+                        }
+                    });
+                    myDlg.show(getSupportFragmentManager(), "myDialog");
+                }
             }
         });
 
@@ -184,6 +202,13 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
             }
         });
 
+
+
+
+
+
+
+        // 카테고리 선택
         for (int i = 0; i < linearCategory.getChildCount(); i++) {
             final CheckBox cb = (CheckBox) linearCategory.getChildAt(i);
 
@@ -203,6 +228,10 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
                 }
             });
         }
+
+
+
+
 
 
 

@@ -73,11 +73,13 @@ public class SignUpActivity extends AppCompatActivity {
     private RadioGroup rgInitGender;
     private Button btnSignUp;
     private byte[] img, img_o;
-    private String name, dob, gender;
+    private int genderID;
+    private String name, bYEAR, bMonth, bDay, dob, gender, genderStr, weightStr;
     private float weight;
     DBAdapter mDB;
     private LocalDate C_DATE = LocalDate.now();
     private String C_DATE_STR = C_DATE.format(DF_DEFAULT);
+    RadioButton rb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +118,7 @@ public class SignUpActivity extends AppCompatActivity {
             Cursor c = mDB.fetchInfo();
             // 기존 정보로 화면 세팅
             img_o = c.getBlob(0);
-            if(img_o != null) {
+            if (img_o != null) {
                 Bitmap bitmap_o = BitmapFactory.decodeByteArray(img_o, 0, img_o.length);
                 ibtnInitPic.setImageBitmap(bitmap_o);
             }
@@ -159,7 +161,6 @@ public class SignUpActivity extends AppCompatActivity {
                 dlg.show();
 
 
-
             }
         });
 
@@ -167,45 +168,71 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //사진 img
-                if(bitmap != null){ // 갤러리에서 이미지 선택했을 때
-                    ByteArrayOutputStream byteS = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteS);
-                    img = byteS.toByteArray();
-                }else if(bitmap == null && mode == 2){ // 수정 모드에서 새 사진 선택 안했을 때
-                    img = img_o; // 원래 이미지 재사용
-                }
-                // 이름
-                name = edtInitName.getText().toString();
-                // 생년월일
-                LocalDate birthday = LocalDate.of(Integer.parseInt(edtInitBY.getText().toString()), Integer.parseInt(edtInitBM.getText().toString()), Integer.parseInt(edtInitBD.getText().toString()));
-                dob = birthday.format(DF_DEFAULT);
-                // 성별
-                RadioButton rb = (RadioButton) findViewById(rgInitGender.getCheckedRadioButtonId());
-                gender = rb.getText().toString();
-                // 몸무게
-                weight = Float.parseFloat(edtInitWeight.getText().toString());
-                // 등록 날짜 (현재 날짜) C_DATE_STR
 
-                if (mode == 2) { // 수정
-                    mDB.updateInfo(1, img, name, dob, gender, weight, C_DATE_STR);
-                    Toast.makeText(SignUpActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
+                // TODO : 필수정보 체크
+
+                if (checkRequired()) {
+
+                    //사진 img
+                    if (bitmap != null) { // 갤러리에서 이미지 선택했을 때
+                        ByteArrayOutputStream byteS = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteS);
+                        img = byteS.toByteArray();
+                    } else if (bitmap == null && mode == 2) { // 수정 모드에서 새 사진 선택 안했을 때
+                        img = img_o; // 원래 이미지 재사용
+                    }
+
+                    LocalDate birthday = LocalDate.of(Integer.parseInt(bYEAR), Integer.parseInt(bMonth), Integer.parseInt(bDay));
+                    dob = birthday.format(DF_DEFAULT);
+
+                    gender = rb.getText().toString();
+
+                    weight = Float.parseFloat(weightStr);
+
+                    // 등록 날짜 (현재 날짜) C_DATE_STR
+                    if (mode == 2) { // 수정
+                        mDB.updateInfo(1, img, name, dob, gender, weight, C_DATE_STR);
+                        Toast.makeText(SignUpActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
+                    } else {
+                        mDB.createInfo(img, name, dob, gender, weight, C_DATE_STR);
+                        Toast.makeText(SignUpActivity.this, "등록 완료", Toast.LENGTH_SHORT).show();
+                    }
+                    mDB.createWeight(C_DATE_STR, weight); // 체중 기록
+                    mDB.close();
+
+                    if (mode == 1) { // 최초 등록일 때
+                        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                    finish();
+
                 } else {
-                    mDB.createInfo(img, name, dob, gender, weight, C_DATE_STR);
-                    Toast.makeText(SignUpActivity.this, "등록 완료", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "정보를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
-                mDB.createWeight(C_DATE_STR, weight); // 체중 기록
-                mDB.close();
-
-                if(mode == 1) { // 최초 등록일 때
-                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-                finish();
-
             }
         });
     }
+
+    private boolean checkRequired() {
+        // 이름
+        name = edtInitName.getText().toString();
+        // 생년월일
+        bYEAR = edtInitBY.getText().toString();
+        bMonth = edtInitBM.getText().toString();
+        bDay = edtInitBD.getText().toString();
+        genderID = rgInitGender.getCheckedRadioButtonId();
+        rb = (RadioButton) findViewById(genderID);
+        weightStr = edtInitWeight.getText().toString();
+
+        if (name.equals("") || bYEAR.equals("") || bMonth.equals("") || bDay.equals("") || genderID == -1 || weightStr.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+
+
+    }
+
 
     // 권한 체크
     private void checkPermission() {
@@ -213,7 +240,7 @@ public class SignUpActivity extends AppCompatActivity {
         List<String> permissionList = new ArrayList<>();
         for (String pm : permissions) {
             if (ContextCompat.checkSelfPermission(this, pm) != PackageManager.PERMISSION_GRANTED) { //사용자가 해당 권한을 가지고 있지 않을 경우 리스트에 해당 권한명 추가
-                if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     new AlertDialog.Builder(this)
                             .setTitle("알림")
                             .setMessage("저장소 권한이 거부되었습니다. 사용을 원하시면 설정에서 직접 해당 권한을 허용해야합니다.")
@@ -221,7 +248,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    intent.setData(Uri.parse("package:"+getPackageName()));
+                                    intent.setData(Uri.parse("package:" + getPackageName()));
                                     startActivity(intent);
                                 }
                             })
@@ -234,7 +261,7 @@ public class SignUpActivity extends AppCompatActivity {
                             .setCancelable(false)
                             .create()
                             .show();
-                }else {
+                } else {
                     permissionList.add(pm);
                 }
             }
@@ -252,9 +279,9 @@ public class SignUpActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MULTIPLE_PERMISSIONS:
-                for(int i=0; i<grantResults.length; i++){
+                for (int i = 0; i < grantResults.length; i++) {
                     // grantResults[] : 허용된 권한 0, 거부된 권한 1
-                    if(grantResults[i] < 0) {
+                    if (grantResults[i] < 0) {
                         Toast.makeText(this, "해당 권한을 활성화하셔야 합니다.", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -276,10 +303,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PICK_FROM_CAMERA:
                     isAlbum = false;
@@ -313,9 +339,9 @@ public class SignUpActivity extends AppCompatActivity {
                     Log.v("onActivityResult Test", "CROP_IMAGE data.getData(): " + data.getData());
                     break;
             }
-        }else{
+        } else {
             Toast.makeText(this, "취소되었습니다", Toast.LENGTH_SHORT).show();
-            if(tempFile != null) {
+            if (tempFile != null) {
                 if (tempFile.exists()) {
                     if (tempFile.delete()) {
                         Log.v(TAG, tempFile.getAbsolutePath() + " 삭제 성공");
@@ -339,10 +365,10 @@ public class SignUpActivity extends AppCompatActivity {
             try {
 
                 */
-/*
-                 *  Uri 스키마를
-                 *  content:/// 에서 file:/// 로  변경한다.
-                 *//*
+        /*
+         *  Uri 스키마를
+         *  content:/// 에서 file:/// 로  변경한다.
+         *//*
 
                 String[] proj = { MediaStore.Images.Media.DATA };
 
@@ -432,19 +458,19 @@ public class SignUpActivity extends AppCompatActivity {
 
         String state = Environment.getExternalStorageState();
         // 외장 메모리 검사
-        if(Environment.MEDIA_MOUNTED.equals(state)) {
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-            if(cameraIntent.resolveActivity(getPackageManager()) != null) {
+            if (cameraIntent.resolveActivity(getPackageManager()) != null) {
                 File tempFile = null;
                 try {
                     tempFile = createImageFile();
                     Log.v("captureCamera TEST", "tempFile: " + tempFile);
-                }catch (IOException e) {
+                } catch (IOException e) {
                     Log.e("captureCamera TEST Error", e.toString());
                     Toast.makeText(this, "이미지 처리 오류! 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                 }
-                if(tempFile != null) {
+                if (tempFile != null) {
                     imageURI = FileProvider.getUriForFile(this, "com.example.jisoo.myfluffy.provider", tempFile);
                     Log.v("captureCamera TEST", "imageURI: " + imageURI);
 
@@ -453,7 +479,7 @@ public class SignUpActivity extends AppCompatActivity {
                     startActivityForResult(cameraIntent, PICK_FROM_CAMERA);
                 }
             }
-        }else {
+        } else {
             Toast.makeText(this, "저장공간에 접근이 불가능한 기기입니다.", Toast.LENGTH_SHORT).show();
         }
 
@@ -485,20 +511,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         int size = list.size();
 
-        if(size == 0) {
+        if (size == 0) {
             Toast.makeText(this, "취소되었습니다.", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             cropIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             cropIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 //        cropIntent.putExtra("outputX", 200);
 //        cropIntent.putExtra("outputY", 200);
             cropIntent.putExtra("aspectX", 1);
             cropIntent.putExtra("aspectY", 1);
-            cropIntent.putExtra("scale",true);
+            cropIntent.putExtra("scale", true);
 
-            if(isAlbum){
+            if (isAlbum) {
                 cropIntent.putExtra("output", albumURI);
-            }else {
+            } else {
                 cropIntent.putExtra("output", imageURI);
             }
             startActivityForResult(cropIntent, CROP_IMAGE);
