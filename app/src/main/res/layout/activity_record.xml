@@ -21,14 +21,14 @@
             android:text="기록"
             android:textSize="18sp" />
 
-        <Button
+       <!-- <Button
             android:id="@+id/tbBtnSave"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_gravity="right"
             android:layout_marginRight="8dp"
             android:background="@drawable/ic_done_black_24dp"
-            android:gravity="center" />
+            android:gravity="center" />-->
 
 
     </android.support.v7.widget.Toolbar>

@@ -45,8 +45,8 @@ public class MonthYearPickerDIalog extends DialogFragment implements View.OnClic
         TextView tvYear = (TextView) v.findViewById(R.id.dlg_tvYear);
         btnPrev = (Button) v.findViewById(R.id.dlg_btnPrev);
         btnNext = (Button) v.findViewById(R.id.dlg_btnNext);
-        btnCancel = (Button) v.findViewById(R.id.dlg_btnCancel);
-        btnOK = (Button) v.findViewById(R.id.dlg_btnOK);
+//        btnCancel = (Button) v.findViewById(R.id.dlg_btnCancel);
+//        btnOK = (Button) v.findViewById(R.id.dlg_btnOK);
         RadioGridTableLayout rgMonths = (RadioGridTableLayout) v.findViewById(R.id.dlg_rgMonths);
 
 
@@ -67,8 +67,8 @@ public class MonthYearPickerDIalog extends DialogFragment implements View.OnClic
 
 
 
-        btnCancel.setOnClickListener(this);
-        btnOK.setOnClickListener(this);
+//        btnCancel.setOnClickListener(this);
+//        btnOK.setOnClickListener(this);
 
 
         return v;
@@ -78,14 +78,14 @@ public class MonthYearPickerDIalog extends DialogFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnDelete:
+            /*case R.id.dlg_btnCancel:
                 dialogListener.onCancelClicked();
                 dismiss();
                 break;
-            case R.id.btnOK:
+            case R.id.dlg_btnOK:
                 dialogListener.onOKClicked();
                 dismiss();
-                break;
+                break;*/
         }
     }
 

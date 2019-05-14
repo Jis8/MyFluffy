@@ -53,7 +53,7 @@ import static com.example.jisoo.myfluffy.MyValues.*;
 public class InfoActivity extends AppCompatActivity {
 
     private ImageView ivInfoPic;
-    private TextView tvInfoName, tvInfoAge, tvNowWeight;
+    private TextView tvInfoName, tvInfoAge, tvInfoGender, tvNowWeight;
     private Button btnEditInfo, btnInputWeight;
 
     private ArrayList<ListViewItem_weight> listViewItemList;
@@ -77,6 +77,7 @@ public class InfoActivity extends AppCompatActivity {
         ivInfoPic = (ImageView) findViewById(R.id.ivInfoPic);
         tvInfoName = (TextView) findViewById(R.id.tvInfoName);
         tvInfoAge = (TextView) findViewById(R.id.tvInfoAge);
+        tvInfoGender = (TextView) findViewById(R.id.tvInfoGender);
         tvNowWeight = (TextView) findViewById(R.id.tvNowWeight);
         btnEditInfo = (Button) findViewById(R.id.btnEditInfo);
         btnInputWeight = (Button) findViewById(R.id.btnInputWeight);
@@ -181,6 +182,7 @@ public class InfoActivity extends AppCompatActivity {
         }
         tvInfoName.setText(c_Info.getString(1));
         tvInfoAge.setText(c_Info.getString(2));
+        tvInfoGender.setText(c_Info.getString(3));
         c_Info.close();
     }
 

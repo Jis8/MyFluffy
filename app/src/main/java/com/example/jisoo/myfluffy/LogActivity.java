@@ -1,6 +1,8 @@
 package com.example.jisoo.myfluffy;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +19,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -106,9 +110,12 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
         if(mode == DAILY){
             frag = LogDailyFragment.newInstance();
             fragmentTransaction.replace(R.id.frag_container, frag, "Daily");
+            tbBtnSwitch.setText("달력");
         } else if(mode == MONTHLY){
             frag = LogMonthlyFragment.newInstance();
             fragmentTransaction.replace(R.id.frag_container, frag, "Monthly");
+            tbBtnSwitch.setText("목록");
+
         }
         fragmentTransaction.commit();
 
@@ -119,27 +126,40 @@ public class LogActivity extends AppCompatActivity implements LogMonthlyFragment
         tbTvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                DatePickerDialog dp = new DatePickerDialog(LogActivity.this, dpListener, mDate.getYear(), mDate.getMonthValue() - 1, mDate.getDayOfMonth());
+                dp.show();
+                /*
                 if(mode == DAILY) {
                     DatePickerDialog dp = new DatePickerDialog(LogActivity.this, dpListener, mDate.getYear(), mDate.getMonthValue() - 1, mDate.getDayOfMonth());
                     dp.show();
                     // monthly에서는 monthpicker 구현해야함
                 }else {
 
-                    // 날짜 선택 대화상자
-                    final MonthYearPickerDIalog myDlg = MonthYearPickerDIalog.newInstance(mDate.getYear(), mDate.getMonthValue());
-                    myDlg.setDialogListener(new MonthYearPickerDIalog.MyDialogListener() {
+                   *//* final AlertDialog.Builder myPicker = new AlertDialog.Builder(LogActivity.this);
+                    final View viewDlgCategory = (View) View.inflate(LogActivity.this, R.layout.dlg_mypicker, null);
+                    myPicker.setView(viewDlgCategory);
+                    myPicker.setPositiveButton("선택 완료", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onOKClicked() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            TextView tvYear = (TextView) viewDlgCategory.findViewById(R.id.dlg_tvYear);
+                            RadioGridTableLayout rg = (RadioGridTableLayout) viewDlgCategory.findViewById(R.id.dlg_rgMonths);
+                            int rbID = rg.getCheckedRadioButtonId();
+                            Log.v("DlgRecord", "rbID : " + rbID);
 
-                        }
+                            if (rbID != -1) {
+                                RadioButton rb = (RadioButton) viewDlgCategory.findViewById(rbID);
+                                int selectedMonth = Integer.parseInt(rb.getText().toString());
+                                mDate = LocalDate.of(selectedYear, selectedMonth, mDate.getDayOfMonth());
 
-                        @Override
-                        public void onCancelClicked() {
-
+                            } else {
+                                Toast.makeText(LogActivity.this, "월을 선택해주세요.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
-                    myDlg.show(getSupportFragmentManager(), "myDialog");
-                }
+                    myPicker.setNegativeButton("취소", null);
+                    myPicker.show();*//*
+                }*/
             }
         });
 

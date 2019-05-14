@@ -1,8 +1,10 @@
 package com.example.jisoo.myfluffy;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -232,45 +234,74 @@ public class RecordActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(category.equals(TOILET)){
+                    saveRecord();
+                }else {
 
-                // Title
-                if(category.equals(TOILET))
-                    title = ((RadioButton)findViewById(rgToilet.getCheckedRadioButtonId())).getText().toString();
-                else
-                    title = (edtTitle.getText().toString().length() == 0)? " " : edtTitle.getText().toString();
-                // DateTime
-                mDateStr = mDate.format(DF_DEFAULT);
-                mTime1Str = tvTime1.getText().toString();
-                mTime2Str = tvTime2.getText().toString();
-                // Content
-                content = (edtContent.getText().length() == 0)? " " : edtContent.getText().toString();
-
-                if(mode == 2){ // 기록 수정으로 들어왔을 때
-                    boolean isUpdated = mDB.updateRecord(rowID_o, category, title, mDateStr, mTime1Str, mTime2Str, content, (byte) 0, (byte) 0, (byte) 0);
-                    Log.v("TEST", "IS ITEM UPDATED? " + isUpdated);
-                    Toast.makeText(RecordActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
-
-                }else{
-                    Cursor c = mDB.fetchThisRecord(category, title, mDateStr, mTime1Str);
-                    Log.v("TEST", "IS ITEM EXIST? " + c.getCount());
-
-                    if(c.getCount() > 0) { // 기존 기록 있을 때
-                        rowID = c.getInt(9);
-                        boolean isUpdated = mDB.updateRecord(rowID, category, title, mDateStr, mTime1Str, mTime2Str, content, (byte) 0, (byte) 0, (byte) 0);
-                        Log.v("TEST", "IS ITEM UPDATED? " + isUpdated);
-                        if(isUpdated) Toast.makeText(RecordActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
-
-                    }else{ // 새로 저장하기
-                        mDB.createRecord(category, title, mDateStr, mTime1Str, mTime2Str, content, (byte) 0, (byte) 0, (byte) 0);
-                        Toast.makeText(RecordActivity.this, "저장 완료", Toast.LENGTH_SHORT).show();
+                    if (edtTitle.getText().toString().length() == 0) {
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(RecordActivity.this);
+                        dlg.setMessage("제목이 입력되지 않았습니다.\n이대로 저장할까요?");
+                        dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                saveRecord();
+                            }
+                        });
+                        dlg.setNegativeButton("취소", null);
+                        dlg.setCancelable(false);
+                        dlg.show();
+                    }else{
+                        saveRecord();
                     }
-                    c.close();
                 }
-                mDB.close();
-                finish();
+
+
             }
         });
     }
+
+    private void saveRecord() {
+        // Title
+        if(category.equals(TOILET))
+            title = ((RadioButton)findViewById(rgToilet.getCheckedRadioButtonId())).getText().toString();
+        else
+            title = (edtTitle.getText().toString().length() == 0)? " " : edtTitle.getText().toString();
+        // DateTime
+        mDateStr = mDate.format(DF_DEFAULT);
+        mTime1Str = tvTime1.getText().toString();
+        mTime2Str = tvTime2.getText().toString();
+        // Content
+        content = (edtContent.getText().length() == 0)? " " : edtContent.getText().toString();
+
+        if(mode == 2){ // 기록 수정으로 들어왔을 때
+            boolean isUpdated = mDB.updateRecord(rowID_o, category, title, mDateStr, mTime1Str, mTime2Str, content, (byte) 0, (byte) 0, (byte) 0);
+            Log.v("TEST", "IS ITEM UPDATED? " + isUpdated);
+            Toast.makeText(RecordActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Cursor c = mDB.fetchThisRecord(category, title, mDateStr, mTime1Str);
+            Log.v("TEST", "IS ITEM EXIST? " + c.getCount());
+
+            if(c.getCount() > 0) { // 기존 기록 있을 때
+                rowID = c.getInt(9);
+                boolean isUpdated = mDB.updateRecord(rowID, category, title, mDateStr, mTime1Str, mTime2Str, content, (byte) 0, (byte) 0, (byte) 0);
+                Log.v("TEST", "IS ITEM UPDATED? " + isUpdated);
+                if(isUpdated) Toast.makeText(RecordActivity.this, "수정 완료", Toast.LENGTH_SHORT).show();
+
+            }else{ // 새로 저장하기
+                mDB.createRecord(category, title, mDateStr, mTime1Str, mTime2Str, content, (byte) 0, (byte) 0, (byte) 0);
+                Toast.makeText(RecordActivity.this, "저장 완료", Toast.LENGTH_SHORT).show();
+            }
+            c.close();
+        }
+        mDB.close();
+        finish();
+
+
+
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

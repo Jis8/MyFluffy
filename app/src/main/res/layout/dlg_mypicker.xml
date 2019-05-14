@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/dlg_bg"
     android:gravity="center"
     android:orientation="vertical"
@@ -214,7 +214,7 @@
 
     </com.example.jisoo.myfluffy.RadioGridTableLayout>
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
@@ -233,5 +233,5 @@
             android:layout_marginHorizontal="24dp"
             android:text="선택"/>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 </LinearLayout>
